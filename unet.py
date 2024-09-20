@@ -1,29 +1,29 @@
 import tensorflow as tf
-import tensorflow.keras as keras
 from tensorflow.keras.layers import Input, Conv2D, MaxPooling2D, Conv2DTranspose, concatenate
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
 
 def build_unet_model(hp):
-    inputs = Input(shape=(64, 64, 1))  # Adjust input shape if needed
+    inputs = Input(shape=(64, 64, 1))  # Input shape can be adjusted
 
     # Encoder
     c1 = Conv2D(hp.Int('filters1', min_value=32, max_value=64, step=32), (3, 3), activation='relu', padding='same')(inputs)
     c1 = Conv2D(hp.Int('filters1', min_value=32, max_value=64, step=32), (3, 3), activation='relu', padding='same')(c1)
-    p1 = MaxPooling2D((2, 2))(c1)
+    p1 = MaxPooling2D((2, 2))(c1)  # After this, dimensions become (32, 32, filters1)
 
     c2 = Conv2D(hp.Int('filters2', min_value=64, max_value=128, step=64), (3, 3), activation='relu', padding='same')(p1)
     c2 = Conv2D(hp.Int('filters2', min_value=64, max_value=128, step=64), (3, 3), activation='relu', padding='same')(c2)
-    p2 = MaxPooling2D((2, 2))(c2)
+    p2 = MaxPooling2D((2, 2))(c2)  # After this, dimensions become (16, 16, filters2)
 
     c3 = Conv2D(hp.Int('filters3', min_value=128, max_value=256, step=128), (3, 3), activation='relu', padding='same')(p2)
     c3 = Conv2D(hp.Int('filters3', min_value=128, max_value=256, step=128), (3, 3), activation='relu', padding='same')(c3)
-    p3 = MaxPooling2D((2, 2))(c3)
+    p3 = MaxPooling2D((2, 2))(c3)  # After this, dimensions become (8, 8, filters3)
 
     c4 = Conv2D(hp.Int('filters4', min_value=256, max_value=512, step=256), (3, 3), activation='relu', padding='same')(p3)
     c4 = Conv2D(hp.Int('filters4', min_value=256, max_value=512, step=256), (3, 3), activation='relu', padding='same')(c4)
-    p4 = MaxPooling2D((2, 2))(c4)
+    p4 = MaxPooling2D((2, 2))(c4)  # After this, dimensions become (4, 4, filters4)
 
+    # Avoid further pooling if dimensions are too small
     # Bottleneck
     c5 = Conv2D(hp.Int('filters5', min_value=512, max_value=1024, step=512), (3, 3), activation='relu', padding='same')(p4)
     c5 = Conv2D(hp.Int('filters5', min_value=512, max_value=1024, step=512), (3, 3), activation='relu', padding='same')(c5)

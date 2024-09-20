@@ -3,7 +3,7 @@ from tensorflow.keras.preprocessing.image import img_to_array, load_img
 import matplotlib.pyplot as plt
 import numpy as np
 
-def load_from_folder(folder, img_size, grayscale, size):
+def load_from_folder(folder, size, img_size, grayscale):
   dataset=[]
   img_folder = os.path.join(folder, 'Image')
   mask_folder = os.path.join(folder, 'Mask')
@@ -16,7 +16,7 @@ def load_from_folder(folder, img_size, grayscale, size):
     mask_filename = os.path.join(mask_folder, mask_filenames[i]) 
     mask = load_img(mask_filename, target_size=img_size, color_mode='grayscale' if grayscale else 'rgb')
     mask_array = img_to_array(mask)
-    dataset.append({'image': np.array(img_array), 'mask': np.array(mask_array)})
+    dataset.append({'image': (img_array), 'mask': (mask_array)})
   return dataset
 
 # folder='IrisDataset/Left Eye/Training Data'
