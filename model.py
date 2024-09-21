@@ -1,5 +1,5 @@
 import nas
-import main
+import main, os
 import numpy as np
 import matplotlib.pyplot as plt
 import dataLoader
@@ -7,6 +7,7 @@ import dataLoader
 tuner = nas.tuner
 train = dataLoader.train
 val = dataLoader.val
+test = dataLoader.test
 
 best_model = tuner.get_best_models(num_models=1)[0]
 
@@ -27,3 +28,22 @@ plt.show()
 print(y_out[0])
 # Optionally save the best model
 best_model.save('best_unet_model.h5')
+
+
+# Predict masks
+predictions = best_model.predict(test[0])
+
+# Post-process predictions
+# Assuming masks are binary (0 or 1), threshold the predictions
+predictions = (predictions > 0.28).astype(np.uint8)
+
+
+def save_predictions(predictions, output_folder):
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+    for i, pred in enumerate(predictions):
+        # Convert the prediction to an image
+        pred_image = pred.squeeze()  # Remove single-dimensional entries
+        pred_image = (pred_image * 255).astype(np.uint8)  # Scale to [0, 255] for saving as image
+        output_path = os.path.join(output_folder, f'pred_{i}.png')
+        plt.imsave(output_path, pred_image, cmap='gray')  # Save as grayscale image
