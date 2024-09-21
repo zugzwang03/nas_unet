@@ -1,5 +1,5 @@
 import nas
-import main, os
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 import dataLoader
