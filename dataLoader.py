@@ -1,5 +1,5 @@
 import os
-from tensorflow.keras.preprocessing.image import img_to_array, load_img
+from tensorflow.keras.preprocessing.image import img_to_array, load_img # type: ignore
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -65,4 +65,4 @@ else:
     valFolder = os.path.join(rightEyeFolder, "Validation Data")
     imgFolder = os.path.join(valFolder, "Image")
     maskFolder = os.path.join(valFolder, "Mask")
-    test = load_from_folder(imgFolder, maskFolder, (64, 64), True)
+    val = load_from_folder(imgFolder, maskFolder, (64, 64), True)
