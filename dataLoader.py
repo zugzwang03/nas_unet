@@ -3,7 +3,6 @@ from tensorflow.keras.preprocessing.image import img_to_array, load_img  # type:
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 def load_from_folder(
     quantity, leftOrRight, imgFolder, maskFolder, img_size=(64, 64), grayscale=True
 ):
@@ -13,7 +12,7 @@ def load_from_folder(
         folder = f"{i:03d}"
         folder = os.path.join(imgFolder, folder, leftOrRight)
         if os.path.exists(folder):
-            for img_name in os.listdir(folder):
+            for img_name in sorted(os.listdir(folder)):
                 if img_name != "Thumbs.db":  # Exclude Thumbs.db
                     img_path = os.path.join(folder, img_name)
                     img = load_img(
@@ -25,7 +24,7 @@ def load_from_folder(
                     images.append(img_array)
             # Try to load corresponding mask (from L01 to L10)
             for mask_suffix in range(1, 11):  # Assuming masks can be L01 to L10
-                mask_name = f"S{i:04d}{leftOrRight}{mask_suffix:02d}.tiff"
+                mask_name = 'OperatorA_' + f"S1{i:03d}{leftOrRight}{mask_suffix:02d}.tiff"
                 mask_path = os.path.join(maskFolder, mask_name)
                 if os.path.exists(mask_path):
                     mask = load_img(
