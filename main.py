@@ -10,7 +10,7 @@ save_predictions = model.save_predictions
 
 
 # Define output folder for predictions
-if dataLoader.leftOrRight == 'Left':
+if dataLoader.leftOrRight == 'L':
     output_folder = 'IrisDataset/Left Eye/Left Eye Output'
 else:
     output_folder = 'IrisDataset/Right Eye/Right Eye Output'  # Replace with your desired output folder path
