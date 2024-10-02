@@ -10,8 +10,8 @@ def build_model(hp):
 tuner = kt.Hyperband(
     build_model,
     objective='val_accuracy',
-    max_epochs=20,
-    hyperband_iterations=10,
+    max_epochs=5,
+    hyperband_iterations=2,
     directory='my_dir',
     project_name='unet_nas'
 )
@@ -19,7 +19,7 @@ tuner = kt.Hyperband(
 tuner.search(
     train[0],
     train[1],
-    epochs=20,
+    epochs=5,
     batch_size=64,
     validation_split=0.2  # Or use a separate validation set
 )
