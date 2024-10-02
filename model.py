@@ -19,16 +19,9 @@ loss, accuracy = best_model.evaluate(val[0], val[1])  # Assuming you have a vali
 print(f"Best Model - Loss: {loss}, Accuracy: {accuracy}")
 
 y_out = best_model.predict(val[0])
-print(y_out[0])
-y_out = (y_out > 0.0021).astype(np.float32)
-plt.imshow(y_out[0], cmap='gray')
-plt.axis('off')  # To hide axis
-plt.show()
 
-print(y_out[0])
 # Optionally save the best model
 best_model.save('best_unet_model.h5')
-
 
 # Predict masks
 predictions = best_model.predict(test[0])
@@ -36,7 +29,6 @@ predictions = best_model.predict(test[0])
 # Post-process predictions
 # Assuming masks are binary (0 or 1), threshold the predictions
 predictions = (predictions > 0.28).astype(np.uint8)
-
 
 def save_predictions(predictions, output_folder):
     if not os.path.exists(output_folder):
