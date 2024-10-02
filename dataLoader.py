@@ -9,7 +9,7 @@ def load_from_folder(
 ):
     images = []
     masks = []
-    for i in range(1, quantity):
+    for i in range(1, quantity + 1):
         print(i)
         folder = f"{i:03d}"
         folder = os.path.join(imgFolder, folder, leftOrRight)
