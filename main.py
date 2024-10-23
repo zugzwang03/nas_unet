@@ -4,7 +4,6 @@ import numpy as np
 import os
 import matplotlib.pyplot as plt
 
-testData = dataLoader.test
 predictions = test.predictions
 save_predictions = test.save_predictions
 
