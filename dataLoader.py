@@ -51,6 +51,6 @@ baseFolder = "/content/drive/MyDrive/CASIA-Iris-Interval"
 maskFolder = "/content/drive/MyDrive/casia4i"
 
 leftOrRight = "L"
-train = load_from_folder(250, leftOrRight, baseFolder, maskFolder, (64, 64), True)
-test = load_from_folder(200, leftOrRight, baseFolder, maskFolder, (64, 64), True)
-val = load_from_folder(50, leftOrRight, baseFolder, maskFolder, (64, 64), True)
+train = load_from_folder(1, leftOrRight, baseFolder, maskFolder, (64, 64), True)
+test = load_from_folder(1, leftOrRight, baseFolder, maskFolder, (64, 64), True)
+val = load_from_folder(1, leftOrRight, baseFolder, maskFolder, (64, 64), True)

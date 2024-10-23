@@ -3,6 +3,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import dataLoader
+import tensorflow as tf
 
 tuner = nas.tuner
 train = dataLoader.train
@@ -23,8 +24,22 @@ y_out = best_model.predict(val[0])
 # Optionally save the best model
 best_model.save('best_unet_model.h5')
 
-# Predict masks
-predictions = best_model.predict(test[0])
+# # Predict masks
+# predictions = best_model.predict(test[0])
+
+# Step 1: Get predictions from the model
+predictions = best_model.predict(test[0])  # Assume test[0] is a batch or a sample
+
+# Step 2: Convert predictions to a complex tensor for FFT
+predictions_complex = tf.cast(predictions, dtype=tf.complex64)
+
+# Step 3: Perform FFT on the predictions
+fft_result = tf.signal.fft(predictions_complex)
+
+# Step 4: Perform IFFT on the FFT result to reconstruct
+ifft_result = tf.signal.ifft(fft_result)
+
+predictions = ifft_result
 
 # Post-process predictions
 # Assuming masks are binary (0 or 1), threshold the predictions
