@@ -1,12 +1,9 @@
-import test
+import model
 import dataLoader
-import numpy as np
-import os
-import matplotlib.pyplot as plt
 
 test = dataLoader.test
-predictions = test.predictions
-save_predictions = test.save_predictions
+predictions = model.predictions
+save_predictions = model.save_predictions
 
 
 # Define output folder for predictions
