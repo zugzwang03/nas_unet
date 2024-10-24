@@ -36,10 +36,12 @@ predictions_complex = tf.cast(predictions, dtype=tf.complex64)
 # Step 3: Perform FFT on the predictions
 fft_result = tf.signal.fft(predictions_complex)
 
+print(fft_result)
+
 # Step 4: Perform IFFT on the FFT result to reconstruct
 ifft_result = tf.signal.ifft(fft_result)
 
-predictions = ifft_result
+predictions = ifft_result.numpy()
 
 # Post-process predictions
 # Assuming masks are binary (0 or 1), threshold the predictions
