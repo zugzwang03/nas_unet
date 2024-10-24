@@ -10,8 +10,7 @@ class FFTLayer(tf.keras.layers.Layer):
     def call(self, inputs):
         # Apply 2D FFT and return the magnitude spectrum
         fft = tf.signal.fft2d(tf.cast(inputs, tf.complex64))
-        fft_shifted = tf.signal.fftshift(fft)
-        magnitude = tf.abs(fft_shifted)
+        magnitude = tf.abs(fft)
         return magnitude
     
 def build_unet_model(hp):
