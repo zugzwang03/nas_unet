@@ -13,7 +13,7 @@ test = dataLoader.test
 best_model = tuner.get_best_models(num_models=1)[0]
 
 # Train the U-Net model
-history = best_model.fit(train[0], train[1], batch_size=8, epochs=20, validation_split=0.1)
+history = best_model.fit(train[0], train[1], batch_size=8, epochs=25, validation_split=0.1)
 
 # Evaluate the best model
 loss, accuracy = best_model.evaluate(val[0], val[1])  # Assuming you have a validation set
