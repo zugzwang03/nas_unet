@@ -5,11 +5,22 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
 import keras_tuner as kt
 
+
+class FFTLayer(tf.keras.layers.Layer):
+    def call(self, inputs):
+        # Apply 2D FFT and return the magnitude spectrum
+        fft = tf.signal.fft2d(tf.cast(inputs, tf.complex64))
+        fft_shifted = tf.signal.fftshift(fft)
+        magnitude = tf.abs(fft_shifted)
+        return magnitude
+    
 def build_unet_model(hp):
     inputs = Input(shape=(64, 64, 1))  # Adjust input shape if needed
+    
+    fft = FFTLayer()(inputs)
 
     # Encoder
-    c1 = Conv2D(hp.Int('filters1', min_value=32, max_value=64, step=32), (3, 3), activation='relu', padding='same')(inputs)
+    c1 = Conv2D(hp.Int('filters1', min_value=32, max_value=64, step=32), (3, 3), activation='relu', padding='same')(fft)
     c1 = Conv2D(hp.Int('filters1', min_value=32, max_value=64, step=32), (3, 3), activation='relu', padding='same')(c1)
     p1 = MaxPooling2D((2, 2))(c1)
 
